@@ -1,0 +1,5 @@
+# binary patches must never get line-ending conversion
+*.bps binary
+*.ips binary
+*.zip binary
+*.bdf text eol=lf

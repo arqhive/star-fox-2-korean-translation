@@ -1,0 +1,21 @@
+# Game data must never be committed
+*.sfc
+*.smc
+*.swc
+*.fig
+*.srm
+*.mss
+*.rgd
+
+# Local work output (ROM builds, extracted game data, screenshots, emulator)
+work/
+out/
+screens/
+Mesen.exe
+
+# Extracted original script (contains copyrighted game text)
+translation/jp.json
+
+# Python
+__pycache__/
+*.pyc
