@@ -56,7 +56,11 @@ BLOBS = [
          'fg': 1, 'bg': 0xA, 'outline': 0xF},
         {'rect': (64, 128, 23, 8), 'text': '사인', 'font': 'g7', 'fg': 1, 'bg': 5},
         {'tiles': [268, 269, 270, 271, 279], 'rect': (4, 1, 35, 7), 'text': '파일럿', 'font': 'g7', 'fg': 1, 'bg': 5},
-        {'rect': (70, 136, 58, 8), 'text': '토털 스코어', 'font': 'g7', 'fg': 1, 'bg': 5},
+        {'rect': (80, 136, 48, 8), 'text': '토털 스코어', 'font': 'g7', 'fg': 1, 'bg': 5},
+        # 스코어 화면 제목: 타일 131-140(y64) 위 + 464-473(y232) 아래가 한 줄로 합쳐짐
+        {'tiles': [list(range(131, 141)), list(range(464, 474))], 'rect': (3, 1, 74, 12),
+         'clear_rect': (0, 0, 80, 14), 'clear': [1, 0xC, 0xD, 0xE], 'text': '스코어 베스트5', 'font': 'g9',
+         'fg': 0xD, 'bg': 0xB, 'outline': 0xC, 'fg_bottom': (0xE, 2)},
         {'rect': (24, 144, 64, 14), 'fill': True, 'text': '결과 보고', 'font': 'g11', 'spacing': 2,
          'fg': 4, 'bg': 5, 'outline': 0xF},
         {'rect': (96, 144, 24, 8), 'text': '타임', 'font': 'g7', 'fg': 1, 'bg': 5},
@@ -70,8 +74,11 @@ BLOBS = [
         {'rect': (95, 193, 32, 13), 'fill': True, 'text': '토털', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
         {'rect': (89, 209, 23, 13), 'fill': True, 'text': '점수', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
         {'rect': (90, 223, 30, 8), 'fill': True, 'text': '랭크', 'font': 'g7', 'fg': 0xF, 'bg': 5},
-        {'rect': (1, 241, 38, 13), 'fill': True, 'text': '재도전', 'font': 'g11', 'fg': 1, 'bg': 8, 'outline': 0xF},
-        {'rect': (41, 241, 46, 13), 'fill': True, 'text': '타이틀', 'font': 'g11', 'fg': 1, 'bg': 8, 'outline': 0xF},
+        {'rect': (2, 241, 38, 13), 'clip': (2, 241, 38, 13), 'clear': [1, 0xF], 'text': '재도전', 'font': 'g9',
+         'bold': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
+        # 버튼 오른쪽 끝 타일(x80-87)은 두 버튼이 공유하므로 건드리지 않음
+        {'rect': (42, 241, 38, 13), 'clip': (42, 241, 38, 13), 'clear': [1, 0xF], 'text': '타이틀', 'font': 'g9',
+         'bold': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
         {'rect': (89, 241, 39, 13), 'fill': True, 'text': '기록보기', 'font': 'g9', 'spacing': -1,
          'fg': 1, 'bg': 0xD, 'outline': 0xF},
     ]},
@@ -83,7 +90,8 @@ BLOBS = [
         {'rect': (0, 72, 70, 8), 'fill': True, 'text': '정말인가? (', 'font': 'g7', 'align': 'left', 'fg': 1, 'bg': 0},
         {'rect': (0, 80, 128, 8), 'fill': True, 'text': '알았네! 지워 두지.', 'font': 'g7', 'align': 'left', 'fg': 1, 'bg': 0},
         {'rect': (0, 88, 128, 8), 'fill': True, 'text': '거기엔 데이터가 없네!', 'font': 'g7', 'align': 'left', 'fg': 1, 'bg': 0},
-        {'rect': (0, 104, 40, 8), 'fill': True, 'text': '토털', 'font': 'g7', 'fg': 4, 'bg': 0, 'shadow': (9, 1, 1)},
+        {'rect': (0, 104, 24, 8), 'clear_rect': (0, 104, 24, 8), 'fill': True, 'clip': (0, 104, 24, 8),
+         'text': '토털', 'font': 'g7', 'fg': 4, 'bg': 0, 'shadow': (9, 1, 1)},
     ]},
     # ---- EXPERT 안내 ----
     {'blob': '17_8000-9B74', 'bpp': 4, 'items': [

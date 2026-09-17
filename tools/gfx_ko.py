@@ -159,23 +159,30 @@ def apply_item(px, it):
         print('  WARNING: text "%s" (%dx%d) exceeds rect %dx%d' % (it['text'].replace('\n', '/'), W, H, w, h))
 
 
+def _tile_rows(tiles):
+    return tiles if tiles and isinstance(tiles[0], (list, tuple)) else [tiles]
+
+
 def strip_view(px, tiles):
-    """build virtual strip rows from tile list (1 row of len(tiles)*8)"""
-    S = [[0] * (8 * len(tiles)) for _ in range(8)]
-    for i, t in enumerate(tiles):
-        tx, ty = t % 16 * 8, t // 16 * 8
-        for yy in range(8):
-            for xx in range(8):
-                S[yy][i * 8 + xx] = px[ty + yy][tx + xx]
+    """virtual image from tile indices: a list (one 8px row) or a list of rows"""
+    rows = _tile_rows(tiles)
+    S = [[0] * (8 * len(rows[0])) for _ in range(8 * len(rows))]
+    for r, row in enumerate(rows):
+        for i, t in enumerate(row):
+            tx, ty = t % 16 * 8, t // 16 * 8
+            for yy in range(8):
+                for xx in range(8):
+                    S[r * 8 + yy][i * 8 + xx] = px[ty + yy][tx + xx]
     return S
 
 
 def strip_back(px, S, tiles):
-    for i, t in enumerate(tiles):
-        tx, ty = t % 16 * 8, t // 16 * 8
-        for yy in range(8):
-            for xx in range(8):
-                px[ty + yy][tx + xx] = S[yy][i * 8 + xx]
+    for r, row in enumerate(_tile_rows(tiles)):
+        for i, t in enumerate(row):
+            tx, ty = t % 16 * 8, t // 16 * 8
+            for yy in range(8):
+                for xx in range(8):
+                    px[ty + yy][tx + xx] = S[r * 8 + yy][i * 8 + xx]
 
 
 def load_spec():
