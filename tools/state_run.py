@@ -5,6 +5,13 @@ input.lua body can use: frame, press(tbl)  (called once per polled frame)
 """
 import sys, os, subprocess, binascii
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _mesen():
+    for c in (os.environ.get('MESEN_EXE', ''), os.path.join(ROOT, 'Mesen.exe'), os.path.join(os.path.dirname(ROOT), 'Mesen.exe')):
+        if c and os.path.exists(c):
+            return c
+    raise SystemExit('Mesen.exe not found (set MESEN_EXE)')
 TEMPLATE = r'''
 local hex = "%(hex)s"
 local st = (hex:gsub("..", function(cc) return string.char(tonumber(cc, 16)) end))
@@ -37,7 +44,7 @@ def run(rom, state, body, outdir, frames=1200, every=60):
     os.makedirs(outdir, exist_ok=True)
     lua = TEMPLATE % {'hex': open(state, 'rb').read().hex(), 'body': body, 'frames': frames, 'every': every}
     lp = os.path.join(outdir, '_run.lua'); open(lp, 'w').write(lua)
-    p = subprocess.run([os.path.join(ROOT, 'Mesen.exe'), '--testrunner', lp, rom], capture_output=True, timeout=1800, cwd=ROOT)
+    p = subprocess.run([_mesen(), '--testrunner', lp, rom], capture_output=True, timeout=1800, cwd=ROOT)
     log = []
     for line in p.stdout.decode('utf-8', 'replace').splitlines():
         if line.startswith('SHOT '):

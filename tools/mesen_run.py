@@ -1,9 +1,16 @@
 """Run Mesen test runner and extract SHOT lines into PNG files."""
 import subprocess, sys, os, binascii
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _mesen():
+    for c in (os.environ.get('MESEN_EXE', ''), os.path.join(ROOT, 'Mesen.exe'), os.path.join(os.path.dirname(ROOT), 'Mesen.exe')):
+        if c and os.path.exists(c):
+            return c
+    raise SystemExit('Mesen.exe not found (set MESEN_EXE)')
 def run(script, rom, outdir, timeout=600):
     os.makedirs(outdir, exist_ok=True)
-    p = subprocess.run([os.path.join(ROOT, 'Mesen.exe'), '--testrunner', script, rom], capture_output=True, timeout=timeout, cwd=ROOT)
+    p = subprocess.run([_mesen(), '--testrunner', script, rom], capture_output=True, timeout=timeout, cwd=ROOT)
     log = []
     for line in p.stdout.decode('utf-8', 'replace').splitlines():
         if line.startswith('SHOT '):
