@@ -78,7 +78,7 @@ IPS 패치는 검사하지 않으니 적용 후 아래 해시로 확인하세요
 --------------------------------------------------------------
 - 번역·기술: arqhive
 - 한글 폰트: Galmuri (© quiple, SIL Open Font License 1.1)
-- 소스·도구: https://github.com/arqhive/star-fox-2-kor-patch (MIT License)
+- 소스·도구: https://github.com/arqhive/star-fox-2-korean-translation (MIT License)
 
 
 ■ 면책
