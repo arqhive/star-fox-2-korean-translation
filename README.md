@@ -65,7 +65,7 @@ python tools/ips.py create "path/to/Star Fox 2 (Japan).sfc" work/sf2_ko.sfc work
 ### 번역 작업
 - 대사: [`translation/ko.txt`](translation/ko.txt) — `번호|번역문` 형식. 태그 `{START}` `{SELECT}` `[Y]` `[X]` `[A]` `[B]` `[L]` `[R]` `[+]` `[▶]`.
 - 원문 확인: `python tools/export_jp.py --rom 원본.sfc` → `work/jp.json` (원문이므로 커밋 금지)
-- 줄 넘침 검사: 빌드 후 `python tools/wrapsim.py work/sf2_ko.sfc 127` (맵 대화창) / `112` (전투 통신창). 한 대사는 3줄 이내여야 합니다.
+- 줄 넘침 검사: 빌드 후 `python tools/wrapsim.py work/sf2_ko.sfc 127` (맵 대화창) / `108` (전투·컷신 통신창). 한 대사는 3줄 이내여야 합니다.
 - 그림 글씨: [`translation/gfx_ko.py`](translation/gfx_ko.py) — 블록별 좌표·색·문구 정의.
 
 ## 폴더 구조

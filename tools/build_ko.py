@@ -378,6 +378,9 @@ def main():
     patch(0xEDD8, bytes.fromhex('a00d3fdf'), jmp('measure'))
     patch(0xEF80, bytes.fromhex('93050e01'), jmp('draw'))
     patch(0xEFAB, bytes.fromhex('a00d3fdf'), jmp('efab'))
+    # comm / cut-scene text box line width 112 -> 108 px: hangul and '.' are inked to the glyph edge,
+    # so full 112 px lines touched the box border
+    patch(0x54FF4, bytes.fromhex('a970008fca0070'), bytes.fromhex('a96c008fca0070'))
 
     # ---- checksum ----
     rom[0x7FDC:0x7FE0] = b'\xFF\xFF\x00\x00'

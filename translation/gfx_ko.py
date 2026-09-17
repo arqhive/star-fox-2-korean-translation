@@ -79,8 +79,13 @@ BLOBS = [
         {'rect': (95, 193, 32, 13), 'fill': True, 'text': '토털', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
         {'rect': (89, 209, 23, 13), 'fill': True, 'text': '점수', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
         # 결과 화면 위쪽 작은 '랭크' (타일 460-461, 16px): 흰 바탕 7줄 + 진한 초록 글씨. y223은 '%' 타일이라 건드리지 않음
-        {'rect': (96, 224, 16, 7), 'fill': True, 'clip': (96, 224, 16, 7), 'text': '랭크', 'font': 'g7',
-         'fg': 0xE, 'bg': 5},
+        {'rect': (88, 224, 32, 7), 'fill': True, 'fg': 5, 'bg': 5},
+        {'rect': (91, 224, 26, 7), 'fill': True, 'clip': (91, 224, 26, 7), 'text': '랭크', 'font': 'g7',
+         'fg': 0xE, 'bg': 0xF},
+        {'rect': (91, 224, 1, 1), 'fill': True, 'fg': 5, 'bg': 5},
+        {'rect': (116, 224, 1, 1), 'fill': True, 'fg': 5, 'bg': 5},
+        {'rect': (91, 230, 1, 1), 'fill': True, 'fg': 5, 'bg': 5},
+        {'rect': (116, 230, 1, 1), 'fill': True, 'fg': 5, 'bg': 5},
         {'rect': (2, 241, 38, 13), 'clip': (2, 241, 38, 13), 'clear': [1, 0xF], 'text': '재도전', 'font': 'g9',
          'bold': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
         # 버튼 오른쪽 끝 타일(x80-87)은 두 버튼이 공유하므로 건드리지 않음
