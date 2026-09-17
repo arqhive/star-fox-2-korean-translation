@@ -1,11 +1,11 @@
 ==============================================================
- 스타폭스 2 (슈퍼 패미컴 일본판) 한글 패치 v0.9
+ 스타폭스 2 (슈퍼 패미컴 일본판) 한글 패치 v0.9.1
  Star Fox 2 - Korean Patch
 ==============================================================
 
 제작: arqhive
-배포 파일: StarFox2_JP_Korean_v0.9.bps  (권장)
-           StarFox2_JP_Korean_v0.9.ips  (BPS를 못 쓰는 도구용)
+배포 파일: StarFox2_JP_Korean_v0.9.1.bps  (권장)
+           StarFox2_JP_Korean_v0.9.1.ips  (BPS를 못 쓰는 도구용)
 
 
 ■ 소개
@@ -42,11 +42,11 @@
 --------------------------------------------------------------
 [Rom Patcher JS]
  1. 사이트를 열고 "ROM file"에 원본 롬을 선택
- 2. "Patch file"에 StarFox2_JP_Korean_v0.9.bps 선택
+ 2. "Patch file"에 StarFox2_JP_Korean_v0.9.1.bps 선택
  3. "Apply patch" → 한글판 롬 저장
 
 [Floating IPS]
- 1. "Apply Patch" → StarFox2_JP_Korean_v0.9.bps 선택
+ 1. "Apply Patch" → StarFox2_JP_Korean_v0.9.1.bps 선택
  2. 원본 롬 선택 → 저장할 파일 이름 입력
 
 BPS 패치는 원본 해시를 자동으로 검사하므로, 원본이 다르면 적용이 거부됩니다.
@@ -54,8 +54,8 @@ IPS 패치는 검사하지 않으니 적용 후 아래 해시로 확인하세요
 
  적용 결과 (한글판)
    - 크기 : 1,048,576 바이트 (원본과 같은 크기)
-   - CRC32: AFC844D5
-   - SHA1 : 72ed558011fbd9f98ea6f491973042d6b017ad86
+   - CRC32: C87C9C68
+   - SHA1 : a3feb6137acb19c683dd7fb2be0c5a7f0d7bf848
 
 
 ■ 실행 환경
