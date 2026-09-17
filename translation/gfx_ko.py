@@ -51,20 +51,25 @@ BLOBS = [
     # ---- 결과 화면 ----
     {'blob': '18_BF5D-DF19', 'bpp': 4, 'items': [
         {'rect': (84, 112, 44, 8), 'text': '사용 안 함', 'font': 'g7', 'fg': 0xE, 'bg': 1},
+        # 왼쪽 테두리 픽셀(x80-83)이 결과 화면에서 점으로 보여 제거
+        {'rect': (80, 113, 4, 14), 'clear': [0xD, 0xE, 0xF], 'fg': 1, 'bg': 1},
         {'rect': (84, 120, 44, 8), 'text': '사용함', 'font': 'g7', 'fg': 0xE, 'bg': 1},
         {'rect': (10, 129, 44, 13), 'fill': True, 'text': '기록삭제', 'font': 'g9', 'bold': True,
          'fg': 1, 'bg': 0xA, 'outline': 0xF},
-        {'rect': (64, 128, 23, 8), 'text': '사인', 'font': 'g7', 'fg': 1, 'bg': 5},
-        {'tiles': [268, 269, 270, 271, 279], 'rect': (4, 1, 35, 7), 'text': '파일럿', 'font': 'g7', 'fg': 1, 'bg': 5},
+        # 스코어 화면 제목줄 판: 사인 x63-87 / 파일럿 타일 6개 x3-44 / 토털 스코어 x80-127 / 타임 x94-119 / 랭크 x96-117
+        {'rect': (63, 128, 25, 8), 'text': '사인', 'font': 'g7', 'fg': 1, 'bg': 5},
+        # 파일럿 판은 타일 6개지만 5번째(279)는 결과 화면 제목 바 배경으로도 쓰이므로 비워 둠 -> 앞 4타일 안에 오른쪽 정렬
+        {'tiles': [268, 269, 270, 271, 279, 280], 'rect': (9, 0, 23, 8), 'clear_rect': (3, 0, 42, 8), 'text': '파일럿',
+         'font': 'g7', 'fg': 1, 'bg': 5},
         {'rect': (80, 136, 48, 8), 'text': '토털 스코어', 'font': 'g7', 'fg': 1, 'bg': 5},
         # 스코어 화면 제목: 타일 131-140(y64) 위 + 464-473(y232) 아래가 한 줄로 합쳐짐
         {'tiles': [list(range(131, 141)), list(range(464, 474))], 'rect': (3, 1, 74, 12),
-         'clear_rect': (0, 0, 80, 14), 'clear': [1, 0xC, 0xD, 0xE], 'text': '스코어 베스트5', 'font': 'g9',
+         'clear_rect': (0, 0, 80, 14), 'clear': [1, 0xC, 0xD, 0xE], 'text': '스코어 베스트 5', 'font': 'g9',
          'fg': 0xD, 'bg': 0xB, 'outline': 0xC, 'fg_bottom': (0xE, 2)},
         {'rect': (24, 144, 64, 14), 'fill': True, 'text': '결과 보고', 'font': 'g11', 'spacing': 2,
          'fg': 4, 'bg': 5, 'outline': 0xF},
-        {'rect': (96, 144, 24, 8), 'text': '타임', 'font': 'g7', 'fg': 1, 'bg': 5},
-        {'rect': (96, 152, 24, 8), 'text': '랭크', 'font': 'g7', 'fg': 1, 'bg': 5},
+        {'rect': (94, 144, 26, 8), 'clear_rect': (94, 144, 26, 8), 'text': '타임', 'font': 'g7', 'fg': 1, 'bg': 5},
+        {'rect': (96, 152, 22, 8), 'clear_rect': (94, 152, 26, 8), 'text': '랭크', 'font': 'g7', 'fg': 1, 'bg': 5},
         {'rect': (0, 184, 88, 7), 'fill': True, 'text': '기본 스코어', 'font': 'g7', 'align': 'left', 'fg': 0xE, 'bg': 1},
         {'rect': (0, 192, 88, 7), 'fill': True, 'text': '파괴한 배틀십', 'font': 'g7', 'align': 'left', 'fg': 0xE, 'bg': 1},
         {'rect': (0, 200, 88, 7), 'fill': True, 'text': '되찾은 행성', 'font': 'g7', 'align': 'left', 'fg': 0xE, 'bg': 1},
@@ -73,7 +78,9 @@ BLOBS = [
         {'rect': (0, 224, 88, 7), 'fill': True, 'text': '파트너 컨티뉴', 'font': 'g7', 'align': 'left', 'fg': 0xE, 'bg': 1},
         {'rect': (95, 193, 32, 13), 'fill': True, 'text': '토털', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
         {'rect': (89, 209, 23, 13), 'fill': True, 'text': '점수', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
-        {'rect': (90, 223, 30, 8), 'fill': True, 'text': '랭크', 'font': 'g7', 'fg': 0xF, 'bg': 5},
+        # 결과 화면 위쪽 작은 '랭크' (타일 460-461, 16px): 흰 바탕 7줄 + 진한 초록 글씨. y223은 '%' 타일이라 건드리지 않음
+        {'rect': (96, 224, 16, 7), 'fill': True, 'clip': (96, 224, 16, 7), 'text': '랭크', 'font': 'g7',
+         'fg': 0xE, 'bg': 5},
         {'rect': (2, 241, 38, 13), 'clip': (2, 241, 38, 13), 'clear': [1, 0xF], 'text': '재도전', 'font': 'g9',
          'bold': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
         # 버튼 오른쪽 끝 타일(x80-87)은 두 버튼이 공유하므로 건드리지 않음
