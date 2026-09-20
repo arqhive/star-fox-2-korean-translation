@@ -130,8 +130,12 @@ def _match_cost(ln, d):
     return None
 
 
-def compress(data):
-    """Returns the blob bytes (to be placed so that it ENDS at the chosen end address)."""
+def compress(data, *, optimize=False):
+    """Return a backwards-read blob; optimize searches farther and scores bit savings.
+
+    Default output stays byte-for-byte compatible with the v1.0 build tool.
+    The optional mode changes match selection only, never the stream format.
+    """
     size = len(data)
     assert 0 < size <= 0xFFFF
     # work on reversed stream: output is produced from the end towards the start.
@@ -151,14 +155,16 @@ def compress(data):
         key = bytes(rev[q:q + 2])
         best = (0, 0)
         cands = heads.get(key, [])
-        for j in reversed(cands[-512:]):
+        for j in reversed(cands[-(4096 if optimize else 512):]):
             d = q - j
             if d > MAXD: break
             ln = 2
             lim = min(255, N - q)
             while ln < lim and rev[j + ln] == rev[q + ln]:
                 ln += 1
-            if ln > best[0] and _match_cost(ln, d) is not None:
+            cost = _match_cost(ln, d)
+            better = (best[0] == 0 or ln * 8 - cost > best[0] * 8 - _match_cost(*best)) if optimize and cost is not None else ln > best[0]
+            if better and cost is not None:
                 best = (ln, d)
                 if ln == lim: break
         return best
@@ -177,7 +183,8 @@ def compress(data):
             if use and q + 1 < N:
                 insert(q)
                 ln2, d2 = best_match(q + 1)
-                if ln2 > ln + 1:
+                prefer_next = (ln2 and ln2 * 8 - _match_cost(ln2, d2) > ln * 8 - cost + 4) if optimize else ln2 > ln + 1
+                if prefer_next:
                     use = False
                 heads[bytes(rev[q:q + 2])].pop() if q + 2 <= N else None
         if use:

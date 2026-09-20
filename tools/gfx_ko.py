@@ -12,6 +12,8 @@ Item keys:
   align  : 'center' (default) | 'left' ; valign 'center' | 'top'
   spacing: extra px between glyphs (can be negative)
   fill   : True -> fill whole rect with bg first
+  pixel_lines: optional list of fixed pixel lines (each a tuple of '.'/'#' rows)
+  strict_bounds: fail if ink/shadow/outline would be clipped; requires clip
 """
 import os, sys, json, importlib.util
 sys.path.insert(0, os.path.dirname(__file__))
@@ -85,6 +87,30 @@ def text_mask(s, fname, spacing=0, line_gap=1):
     return [(c.crop((0, top, c.width, bot))) for c in crops], lh, W, H
 
 
+def item_mask(it):
+    """Use hand-tuned pixels for fixed labels, without changing dialogue fonts."""
+    if 'pixel_lines' not in it:
+        return text_mask(it['text'], it['font'], it.get('spacing', 0), it.get('line_gap', 1))
+    lines = []
+    height = len(it['pixel_lines'][0])
+    for rows in it['pixel_lines']:
+        if not rows or len(rows) != height or not rows[0]:
+            raise ValueError('pixel lines must have equal, nonzero heights')
+        width = len(rows[0])
+        if any(len(row) != width or set(row) - {'.', '#'} for row in rows):
+            raise ValueError('pixel rows must have equal widths and only . or #')
+        im = Image.new('L', (width, height), 0)
+        for y, row in enumerate(rows):
+            for x, value in enumerate(row):
+                if value == '#': im.putpixel((x, y), 255)
+        # Center the visible pixels, just as text_mask does for BDF glyphs.
+        bounds = im.getbbox()
+        if bounds is not None:
+            im = im.crop((bounds[0], 0, bounds[2], height))
+        lines.append(im)
+    return lines, height, max(im.width for im in lines), height * len(lines) + it.get('line_gap', 1) * (len(lines) - 1)
+
+
 def apply_item(px, it):
     if it.get('vflip') or it.get('hflip'):
         x, y, w, h = it.get('flip_rect', it['rect'])
@@ -112,7 +138,7 @@ def apply_item(px, it):
                 px[yy][xx] = bg
     if not it.get('text'):
         return
-    lines, lh, W, H = text_mask(it['text'], it['font'], it.get('spacing', 0), it.get('line_gap', 1))
+    lines, lh, W, H = item_mask(it)
     oy = y + (h - H) // 2 if it.get('valign', 'center') == 'center' else y
     oy += it.get('dy', 0)
     ink = []
@@ -129,8 +155,14 @@ def apply_item(px, it):
         ink = ink + [(X + 1, Y) for X, Y in ink]
     inkset = set(ink)
     clip = it.get('clip')
+    if it.get('strict_bounds') and clip is None:
+        raise ValueError('strict_bounds requires an explicit clip rectangle')
     def put(X, Y, v):
-        if clip and not (clip[0] <= X < clip[0] + clip[2] and clip[1] <= Y < clip[1] + clip[3]):
+        outside_clip = clip and not (clip[0] <= X < clip[0] + clip[2] and clip[1] <= Y < clip[1] + clip[3])
+        outside_image = not (0 <= Y < len(px) and 0 <= X < len(px[0]))
+        if it.get('strict_bounds') and (outside_clip or outside_image):
+            raise ValueError('graphics pixel outside bounds: %r at (%d, %d)' % (it['text'], X, Y))
+        if outside_clip:
             return
         if 0 <= Y < len(px) and 0 <= X < len(px[0]):
             px[Y][X] = v

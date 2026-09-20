@@ -2,6 +2,24 @@
 # 좌표는 블록 이미지(16타일 폭) 기준 픽셀. work/i_<blob>_N.png, tools/dumpidx.py 참고.
 # 폰트: g7(Galmuri7, 한글 7px) g7s(g7을 6px로 자름, 받침 글자 주의) g9 g11 g11b g11c
 
+# HUD 전용 7x6 픽셀 글리프. Galmuri7의 형태를 바탕으로 높이를 고정하고
+# 특히 '코'의 가로획 사이 빈 줄을 보존한다. 대사 폰트에는 적용하지 않는다.
+# Galmuri 파생 픽셀: fonts/OFL-Galmuri.txt (SIL OFL 1.1).
+HUD6 = {
+    '코': ('.#####.', '.....#.', '.#####.', '...#.#.', '...#...', '#######'),
+    '네': ('#...#.#', '#.###.#', '#...#.#', '#...#.#', '###.#.#', '....#.#'),
+    '리': ('####.#.', '...#.#.', '####.#.', '#....#.', '####.#.', '.....#.'),
+    '아': ('.##..#.', '#..#.#.', '#..#.##', '#..#.#.', '.##..#.', '.....#.'),
+    '대': ('###.#.#', '#...#.#', '#...###', '#...#.#', '###.#.#', '....#.#'),
+    '미': ('####.#.', '#..#.#.', '#..#.#.', '#..#.#.', '####.#.', '.....#.'),
+    '지': ('######.', '..#..#.', '.#.#.#.', '.#.#.#.', '#...##.', '.....#.'),
+}
+
+
+def hud_line(text):
+    return tuple('.'.join(HUD6[ch][y] for ch in text) for y in range(6))
+
+
 BLOBS = [
     # ---- 맵 화면 HUD ----
     {'blob': '19_8000-8A80', 'bpp': 4, 'items': [
@@ -11,7 +29,9 @@ BLOBS = [
         {'rect': (0, 41, 30, 7), 'text': '타임', 'font': 'g7', 'fg': 0xE, 'bg': 6},
         {'rect': (34, 41, 36, 7), 'text': '스코어', 'font': 'g7', 'fg': 0xE, 'bg': 6},
         {'rect': (79, 67, 40, 13), 'clear_rect': (79, 68, 40, 12), 'text': '코네리아\n대미지',
-         'font': 'g7s', 'fg': 0xE, 'bg': 2, 'clear': [0xE, 1], 'line_gap': 1},
+         'font': 'g7s', 'pixel_lines': [hud_line('코네리아'), hud_line('대미지')],
+         'clip': (79, 67, 40, 13), 'strict_bounds': True,
+         'fg': 0xE, 'bg': 2, 'clear': [0xE, 1], 'line_gap': 1},
     ]},
     # ---- 파일럿 선택 화면 ----
     {'blob': '18_DF19-EAE9', 'bpp': 4, 'items': [
@@ -28,8 +48,11 @@ BLOBS = [
         {'rect': (1, 56, 42, 7), 'vflip': True, 'text': '아이템', 'font': 'g7', 'fg': 9, 'bg': 0xB, 'clear': [9, 0xA]},
         {'rect': (64, 23, 31, 7), 'clear_rect': (64, 22, 31, 9), 'fill': True, 'text': '컨트롤', 'font': 'g7',
          'fg': 1, 'bg': 0, 'outline': 0xF},
-        {'rect': (1, 17, 62, 7), 'clear_rect': (1, 16, 62, 8), 'text': '셀렉트', 'font': 'g7', 'bold': True, 'spacing': 2, 'fg': 1, 'bg': 0xD},
-        {'rect': (1, 32, 62, 7), 'clear_rect': (1, 32, 62, 8), 'text': '컨트롤', 'font': 'g7', 'bold': True, 'spacing': 2, 'fg': 1, 'bg': 0xD},
+        # 7px에서는 가로 1px 팽창이 속공간을 메우므로 원래 획 두께를 유지한다.
+        {'rect': (1, 17, 62, 7), 'clear_rect': (1, 16, 62, 8), 'clip': (1, 16, 62, 8), 'strict_bounds': True,
+         'text': '셀렉트', 'font': 'g7', 'spacing': 2, 'fg': 1, 'bg': 0xD},
+        {'rect': (1, 32, 62, 7), 'clear_rect': (1, 32, 62, 8), 'clip': (1, 32, 62, 8), 'strict_bounds': True,
+         'text': '컨트롤', 'font': 'g7', 'spacing': 2, 'fg': 1, 'bg': 0xD},
         {'rect': (24, 147, 76, 11), 'fill': True, 'text': '파트너', 'font': 'g11', 'bold': True, 'spacing': 4,
          'fg': 9, 'bg': 0, 'outline': 0xF},
     ]},
@@ -54,7 +77,8 @@ BLOBS = [
         # 왼쪽 테두리 픽셀(x80-83)이 결과 화면에서 점으로 보여 제거
         {'rect': (80, 113, 4, 14), 'clear': [0xD, 0xE, 0xF], 'fg': 1, 'bg': 1},
         {'rect': (84, 120, 44, 8), 'text': '사용함', 'font': 'g7', 'fg': 0xE, 'bg': 1},
-        {'rect': (10, 129, 44, 13), 'fill': True, 'text': '기록삭제', 'font': 'g9', 'bold': True,
+        {'rect': (10, 129, 44, 13), 'clip': (10, 129, 44, 13), 'strict_bounds': True,
+         'fill': True, 'text': '기록삭제', 'font': 'g9',
          'fg': 1, 'bg': 0xA, 'outline': 0xF},
         # 스코어 화면 제목줄 판: 사인 x63-87 / 파일럿 타일 6개 x3-44 / 토털 스코어 x80-127 / 타임 x94-119 / 랭크 x96-117
         {'rect': (63, 128, 25, 8), 'text': '사인', 'font': 'g7', 'fg': 1, 'bg': 5},
@@ -76,8 +100,10 @@ BLOBS = [
         {'rect': (0, 208, 80, 7), 'fill': True, 'text': '타임 (리미트)', 'font': 'g7', 'align': 'left', 'fg': 0xE, 'bg': 1},
         {'rect': (0, 216, 88, 7), 'fill': True, 'text': '코네리아 대미지', 'font': 'g7', 'align': 'left', 'fg': 0xE, 'bg': 1},
         {'rect': (0, 224, 88, 7), 'fill': True, 'text': '파트너 컨티뉴', 'font': 'g7', 'align': 'left', 'fg': 0xE, 'bg': 1},
-        {'rect': (95, 193, 32, 13), 'fill': True, 'text': '토털', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
-        {'rect': (89, 209, 23, 13), 'fill': True, 'text': '점수', 'font': 'g9', 'bold': True, 'fg': 0xE, 'bg': 5, 'outline': 0xF},
+        {'rect': (95, 193, 32, 13), 'clip': (95, 193, 32, 13), 'strict_bounds': True,
+         'fill': True, 'text': '토털', 'font': 'g9', 'fg': 0xE, 'bg': 5, 'outline': 0xF},
+        {'rect': (89, 209, 23, 13), 'clip': (89, 209, 23, 13), 'strict_bounds': True,
+         'fill': True, 'text': '점수', 'font': 'g9', 'fg': 0xE, 'bg': 5, 'outline': 0xF},
         # 결과 화면 위쪽 작은 '랭크' (타일 460-461, 16px): 흰 바탕 7줄 + 진한 초록 글씨. y223은 '%' 타일이라 건드리지 않음
         {'rect': (88, 224, 32, 7), 'fill': True, 'fg': 5, 'bg': 5},
         {'rect': (91, 224, 26, 7), 'fill': True, 'clip': (91, 224, 26, 7), 'text': '랭크', 'font': 'g7',
@@ -87,14 +113,14 @@ BLOBS = [
         {'rect': (91, 230, 1, 1), 'fill': True, 'fg': 5, 'bg': 5},
         {'rect': (116, 230, 1, 1), 'fill': True, 'fg': 5, 'bg': 5},
         {'rect': (2, 241, 38, 13), 'clip': (2, 241, 38, 13), 'clear': [1, 0xF], 'text': '재도전', 'font': 'g9',
-         'bold': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
+         'strict_bounds': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
         # 버튼 오른쪽 끝 타일(x80-87)은 두 버튼이 공유하므로 건드리지 않음
         {'rect': (42, 241, 38, 13), 'clip': (42, 241, 38, 13), 'clear': [1, 0xF], 'text': '타이틀', 'font': 'g9',
-         'bold': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
+         'strict_bounds': True, 'fg': 1, 'bg': 8, 'outline': 0xF},
         # 기록 메뉴 '기록보기' 버튼(원문 スコア見ル): 타일 491-495+256 / 507-511+272 가 48px 한 버튼
         {'tiles': [[491, 492, 493, 494, 495, 256], [507, 508, 509, 510, 511, 272]], 'rect': (3, 1, 42, 13),
          'clip': (2, 1, 44, 13), 'clear_rect': (2, 1, 44, 13), 'clear': [1, 0xF], 'text': '기록보기', 'font': 'g9',
-         'bold': True, 'fg': 1, 'bg': 0xD, 'outline': 0xF},
+         'strict_bounds': True, 'fg': 1, 'bg': 0xD, 'outline': 0xF},
     ]},
     # ---- 기록 화면 ----
     {'blob': '17_9B74-AA48', 'bpp': 4, 'items': [
@@ -113,12 +139,16 @@ BLOBS = [
         {'rect': (16, 225, 72, 8), 'fill': True, 'text': '도전해 보자!', 'font': 'g7', 'align': 'left', 'fg': 9, 'bg': 0xE},
     ]},
     # ---- 일시정지(맵) 메뉴: 스프라이트 타일 64-73 / 80-89 / 77-79 ----
+    # 높이 8px = 본체 7px + 아래 그림자 1px. 전방향 외곽선은 9px가 필요하다.
     {'blob': '16_DDD4-E5F8', 'bpp': 4, 'items': [
         {'rect': (0, 32, 80, 7), 'clear_rect': (0, 32, 80, 8), 'fill': True, 'clip': (0, 32, 80, 8),
-         'text': '배틀 계속', 'font': 'g7', 'align': 'left', 'dx': 1, 'fg': 1, 'bg': 0, 'outline': 0xF, 'fg_bottom': (2, 2)},
+         'text': '배틀 계속', 'font': 'g7', 'align': 'left', 'dx': 1, 'fg': 1, 'bg': 0,
+         'shadow': (0xF, 1, 1), 'strict_bounds': True, 'fg_bottom': (2, 2)},
         {'rect': (0, 40, 80, 7), 'clear_rect': (0, 40, 80, 8), 'fill': True, 'clip': (0, 40, 80, 8),
-         'text': '맵으로 복귀', 'font': 'g7', 'align': 'left', 'dx': 1, 'fg': 1, 'bg': 0, 'outline': 0xF, 'fg_bottom': (2, 2)},
+         'text': '맵으로 복귀', 'font': 'g7', 'align': 'left', 'dx': 1, 'fg': 1, 'bg': 0,
+         'shadow': (0xF, 1, 1), 'strict_bounds': True, 'fg_bottom': (2, 2)},
         {'rect': (104, 32, 24, 7), 'clear_rect': (104, 32, 24, 8), 'fill': True, 'clip': (104, 32, 24, 8),
-         'text': '카메라', 'font': 'g7', 'align': 'left', 'fg': 1, 'bg': 0, 'outline': 0xF, 'fg_bottom': (2, 2)},
+         'text': '카메라', 'font': 'g7', 'align': 'left', 'fg': 1, 'bg': 0,
+         'shadow': (0xF, 1, 1), 'strict_bounds': True, 'fg_bottom': (2, 2)},
     ]},
 ]
