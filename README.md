@@ -5,10 +5,10 @@
 
 **제작: arqhive**
 
-**최신 버전: [v1.1](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.1)** —
-그림 글씨 12개의 획·간격·그림자를 개선했습니다. 제작자 인게임 확인을 마쳤으며,
-대사·폰트 데이터·게임 코드는 v1.0과 동일합니다.
-[변경 사항](docs/RELEASE_v1.1.md) · [그래픽 개선 기록](docs/GRAPHICS_REFINEMENT.md)
+**최신 버전: [v1.1.1](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.1.1)** —
+대사에서 같은 뜻의 '항모'와 '항공모함'이 섞여 있던 것을 '항공모함'으로 통일했습니다.
+그림 글씨는 v1.1과 같습니다.
+[변경 사항](docs/RELEASE_v1.1.1.md) · [v1.1 그래픽 개선 기록](docs/GRAPHICS_REFINEMENT.md)
 
 - 대사 216개 전체 한글화 (페퍼 장군 브리핑, 팀원·스타울프·안돌프 대사, 조작 안내)
 - 슈퍼FX(GSU) 텍스트 렌더러 확장: 한글 폰트 7페이지(약 460자), 2바이트 문자 지원
@@ -21,9 +21,9 @@
 
 ## 사용자용: 패치 적용
 
-[`v1.1 배포 페이지`](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.1) 또는
-[`release/`](release/) 폴더에서 `StarFox2_JP_Korean_v1.1.bps`를 받아 **원본 일본판**에 적용하세요.
-기존 v1.0 한글판에는 `StarFox2_Korean_v1.0_to_v1.1.bps`를 사용하세요. 두 패치의 결과는 같습니다.
+[`v1.1.1 배포 페이지`](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.1.1) 또는
+[`release/`](release/) 폴더에서 `StarFox2_JP_Korean_v1.1.1.bps`를 받아 **원본 일본판**에 적용하세요.
+기존 v1.1 한글판에는 `StarFox2_Korean_v1.1_to_v1.1.1.bps`를 사용하세요. 두 패치의 결과는 같습니다.
 `.ips`도 제공하며, 자세한 방법은 [`README_한국어.txt`](release/README_한국어.txt)를 참고하세요.
 
 | 원본 (일본판, 헤더 없음) | 값 |
@@ -34,12 +34,12 @@
 | MD5 | `e7de4068dd0577ec5567783739839a76` |
 | SHA1 | `578df9cc661548f278faa1fb4b9b2e9701bde92e` |
 
-| 패치 적용 결과 (v1.1) | 값 |
+| 패치 적용 결과 (v1.1.1) | 값 |
 |---|---|
 | 크기 | 1,048,576 바이트 (원본과 같음) |
-| CRC32 | `F9F6E81E` |
-| MD5 | `81f9c493b9fcc974f6026a6aa30d0b5f` |
-| SHA1 | `a398c11656ee922b0f9664c15b2968a93904468d` |
+| CRC32 | `CCF4A953` |
+| MD5 | `f94f97ea6ccb483ff62d1c4ca85b49e8` |
+| SHA1 | `307dcb87a40d71ed34e4fa116a1f5b444fad74fb` |
 
 - 북미·유럽판 롬에는 적용할 수 없습니다.
 - 확인: Mesen 2. 원본과 같은 1MB 구조라 슈퍼FX를 지원하는 PC 에뮬레이터(bsnes/higan, Snes9x 등),
@@ -55,15 +55,14 @@
 
 ### 빌드
 ```bash
-python tools/build_graphics.py --rom "path/to/Star Fox 2 (Japan).sfc" --out work/sf2_ko.sfc
+python tools/build_ko.py --rom "path/to/Star Fox 2 (Japan).sfc" --out work/sf2_ko.sfc
 python tools/bps.py create "path/to/Star Fox 2 (Japan).sfc" work/sf2_ko.sfc work/patch.bps
 python tools/ips.py create "path/to/Star Fox 2 (Japan).sfc" work/sf2_ko.sfc work/patch.ips
 ```
-위 명령은 저장소에 포함된 v1.0 BPS로 기준 롬을 만든 뒤 새 그래픽만 교체하므로,
-v1.1 배포본과 바이트 단위로 같습니다. 기존 v1.0 롬이 있으면 `--baseline`으로 지정할 수도 있습니다.
+대사·폰트·그림 글씨를 모두 포함한 전체 빌드이며, 결과는 v1.1.1 배포본과 바이트 단위로 같습니다.
 
-대사·폰트까지 수정하는 개발용 전체 빌드는 `build_ko.py`를 사용합니다.
-이 경로는 빈 공간에 폰트를 재배치하므로 v1.1 배포본과 해시가 다를 수 있습니다.
+`tools/build_graphics.py`는 v1.1에서 쓴 그래픽 전용 경로로, v1.0 롬을 기준으로 그래픽 스트림만
+교체해 v1.1 롬을 재현합니다. 대사가 바뀐 v1.1.1부터는 위의 전체 빌드를 사용합니다.
 
 `build_ko.py`는 다음을 수행합니다.
 1. `translation/gfx_ko.py` 정의에 따라 압축 그래픽을 풀어 한글을 그리고 재압축해 제자리에 삽입
