@@ -1,7 +1,7 @@
 """Refine v1.0 graphics while preserving its dialogue, font locations and code.
 
-python tools/build_graphics.py --rom original.sfc --out v1.1.sfc
-Optional --baseline accepts an existing v1.0 ROM; otherwise use the bundled v1.0 BPS.
+python tools/build_graphics.py --rom original.sfc --baseline v1.0_ko.sfc --out v1.1.sfc
+--baseline takes an existing v1.0 Korean ROM (build it from the v1.0 tag if needed).
 Only verified graphics streams and the SNES checksum may change. No relocation.
 """
 import argparse
@@ -82,16 +82,11 @@ def build(source, baseline):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--rom', required=True)
-    ap.add_argument('--baseline', help='existing v1.0 Korean ROM (default: apply bundled v1.0 BPS)')
+    ap.add_argument('--baseline', required=True, help='existing v1.0 Korean ROM')
     ap.add_argument('--out', required=True)
     args = ap.parse_args()
     source = Path(args.rom).read_bytes()
-    if args.baseline:
-        baseline = Path(args.baseline).read_bytes()
-    else:
-        from bps import apply
-        patch = Path(__file__).resolve().parents[1] / 'release' / 'StarFox2_JP_Korean_v1.0.bps'
-        baseline = apply(source, patch.read_bytes())
+    baseline = Path(args.baseline).read_bytes()
     rom = build(source, baseline)
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -84,7 +84,7 @@ python tools/ips.py create "path/to/Star Fox 2 (Japan).sfc" work/sf2_ko.sfc work
 4. 슈퍼FX 텍스트 루틴에 훅을 넣습니다. 접두 바이트 `0x01`에서 `0x0F`까지가 폰트 페이지 전환입니다.
 5. 대사를 다시 인코딩해 원래 대사 영역에 기록하고 체크섬을 갱신합니다.
 
-`tools/build_graphics.py`는 v1.1에서 쓴 그래픽 전용 경로입니다. v1.0 롬의 그래픽 스트림만 바꿔 v1.1 롬을 재현하며, 대사가 바뀐 v1.1.1부터는 위의 전체 빌드를 씁니다.
+`tools/build_graphics.py`는 v1.1에서 쓴 그래픽 전용 경로입니다. `--baseline`으로 넘긴 v1.0 한글판 롬의 그래픽 스트림만 바꿔 v1.1 롬을 재현하며, 대사가 바뀐 v1.1.1부터는 위의 전체 빌드를 씁니다.
 
 ### 번역 수정
 
