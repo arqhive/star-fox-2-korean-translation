@@ -3,7 +3,10 @@
 *Star Fox 2* (슈퍼 패미컴, 일본판 Classic Mini·Switch Online 덤프) 비공식 한국어 팬 패치입니다.
 대사는 일본어판 원문을 기준으로 번역했습니다.
 
-**제작: arqhive** · **최신 버전: [v1.1.2](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.1.2)**
+**제작: arqhive** · **최신 버전: [v1.2](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.2)**
+
+> **v1.2가 최종판입니다.** 번역과 그림 글씨 검수를 모두 마쳤습니다.
+> 앞으로는 문제가 보고되면 고치는 것 외에 새 작업을 하지 않습니다.
 
 - 대사 216개 전체를 한글화했습니다(페퍼 장군 브리핑, 팀원·스타울프·안돌프 대사, 조작 안내).
 - 슈퍼FX(GSU) 텍스트 렌더러를 확장해 한글 폰트 7페이지(약 460자)와 2바이트 문자를 지원합니다.
@@ -22,13 +25,13 @@
 
 ### 적용 방법
 
-1. [배포 페이지](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.1.2)에서 `StarFox2_KO_v1.1.2.zip`을 받습니다.
+1. [배포 페이지](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.2)에서 `StarFox2_KO_v1.2.zip`을 받습니다.
 2. 가진 롬에 맞는 패치 하나를 적용합니다.
 
    | 가진 롬 | 적용할 패치 |
    |---|---|
-   | 원본 일본판 | `StarFox2_KO_v1.1.2.bps` (권장) 또는 `.ips` |
-   | 기존 v1.1.1 한글판 | `StarFox2_KO_v1.1.1_to_v1.1.2.bps` |
+   | 원본 일본판 | `StarFox2_KO_v1.2.bps` (권장) 또는 `.ips` |
+   | 기존 v1.1.2 한글판 | `StarFox2_KO_v1.1.2_to_v1.2.bps` |
 
 3. 결과 롬의 확인값을 아래 표와 비교합니다. 어느 패치를 써도 결과는 같습니다.
 
@@ -36,12 +39,12 @@
 
 ### 파일 확인값
 
-| 항목 | 원본 일본판 (헤더 없음) | 패치 적용 결과 (v1.1.2) |
+| 항목 | 원본 일본판 (헤더 없음) | 패치 적용 결과 (v1.2) |
 |---|---|---|
 | 크기 | 1,048,576 바이트 | 1,048,576 바이트 |
-| CRC32 | `3753682F` | `71D16241` |
-| MD5 | `e7de4068dd0577ec5567783739839a76` | `dcce8c65c4538844ac96ce7547762053` |
-| SHA-1 | `578df9cc661548f278faa1fb4b9b2e9701bde92e` | `2cfe43b0bb3821d820e9bab8380469daaecbb25a` |
+| CRC32 | `3753682F` | `DB81D4C8` |
+| MD5 | `e7de4068dd0577ec5567783739839a76` | `01e41205c05943540eb900db9618a854` |
+| SHA-1 | `578df9cc661548f278faa1fb4b9b2e9701bde92e` | `08f280e14c2d8087601e8da20c9e5fd1189e4be7` |
 
 원본 파일명 예: `Star Fox 2 (Japan) (Classic Mini, Switch Online).sfc`
 
@@ -74,7 +77,7 @@ python tools/bps.py create "path/to/Star Fox 2 (Japan).sfc" work/sf2_ko.sfc work
 python tools/ips.py create "path/to/Star Fox 2 (Japan).sfc" work/sf2_ko.sfc work/patch.ips
 ```
 
-대사·폰트·그림 글씨를 모두 포함한 전체 빌드이며, 결과는 v1.1.2 배포본과 바이트 단위로 같습니다.
+대사·폰트·그림 글씨를 모두 포함한 전체 빌드이며, 결과는 v1.2 배포본과 바이트 단위로 같습니다.
 
 `build_ko.py`는 다음을 수행합니다.
 
