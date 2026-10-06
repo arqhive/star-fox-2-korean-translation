@@ -24,13 +24,13 @@
 
 ### 적용 방법
 
-1. [배포 페이지](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.2f)에서 `StarFox2_KO_v1.2f.zip`을 받습니다.
+1. [배포 페이지](https://github.com/arqhive/star-fox-2-korean-translation/releases/tag/v1.2f)에서 `STARFOX2_KPatch_v1.2f.zip`을 받습니다.
 2. 가진 롬에 맞는 패치 하나를 적용합니다.
 
    | 가진 롬 | 적용할 패치 |
    |---|---|
-   | 원본 일본판 | `StarFox2_KO_v1.2f.bps` (권장) 또는 `.ips` |
-   | 기존 v1.1.2 한글판 | `StarFox2_KO_v1.1.2_to_v1.2f.bps` |
+   | 원본 일본판 | `STARFOX2_KPatch_v1.2f.bps` (권장) 또는 `.ips` |
+   | 기존 v1.1.2 한글판 | `STARFOX2_KPatch_v1.2f_from-v1.1.2.bps` |
 
 3. 결과 롬의 확인값을 아래 표와 비교합니다. 어느 패치를 써도 결과는 같습니다.
 
