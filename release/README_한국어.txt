@@ -4,9 +4,9 @@
 ==============================================================
 
 제작: arqhive
-배포 파일: StarFox2_KO_v1.2f.bps  (권장)
-           StarFox2_KO_v1.2f.ips  (BPS를 못 쓰는 도구용)
-           StarFox2_KO_v1.1.2_to_v1.2f.bps  (기존 v1.1.2 한글판용)
+배포 파일: STARFOX2_KPatch_v1.2f.bps  (권장)
+           STARFOX2_KPatch_v1.2f.ips  (BPS를 못 쓰는 도구용)
+           STARFOX2_KPatch_v1.2f_from-v1.1.2.bps  (기존 v1.1.2 한글판용)
 
 
 ■ 소개
@@ -72,18 +72,18 @@
 --------------------------------------------------------------
 [Rom Patcher JS]
  1. 사이트를 열고 "ROM file"에 원본 롬을 선택
- 2. "Patch file"에 StarFox2_KO_v1.2f.bps 선택
+ 2. "Patch file"에 STARFOX2_KPatch_v1.2f.bps 선택
  3. "Apply patch" → 한글판 롬 저장
 
 [Floating IPS]
- 1. "Apply Patch" → StarFox2_KO_v1.2f.bps 선택
+ 1. "Apply Patch" → STARFOX2_KPatch_v1.2f.bps 선택
  2. 원본 롬 선택 → 저장할 파일 이름 입력
 
 [기존 v1.1.2 한글판에서 업그레이드]
- StarFox2_KO_v1.1.2_to_v1.2f.bps를 기존 v1.1.2 한글판에 적용하세요.
+ STARFOX2_KPatch_v1.2f_from-v1.1.2.bps를 기존 v1.1.2 한글판에 적용하세요.
  입력 CRC32: 71D16241
  입력 SHA1 : 2cfe43b0bb3821d820e9bab8380469daaecbb25a
- (그 이전 한글판은 원본 일본판에 StarFox2_KO_v1.2f.bps를 적용하는 편이 간단합니다.)
+ (그 이전 한글판은 원본 일본판에 STARFOX2_KPatch_v1.2f.bps를 적용하는 편이 간단합니다.)
  일본판용 패치와 업그레이드 패치는 결과가 같으며 하나만 적용하면 됩니다.
 
 BPS 패치는 입력 해시를 자동으로 검사하므로, 입력이 다르면 적용이 거부됩니다.
